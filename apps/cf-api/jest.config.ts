@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-    displayName: 'checkflow-api',
+    displayName: 'cf-api',
     preset: '../../jest.preset.js',
     globals: {
         'ts-jest': {

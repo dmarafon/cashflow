@@ -1,21 +1,14 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+import { initializeServer } from "./server/initializeServer";
+require("dotenv").config();
 
-import * as express from 'express';
-import * as path from 'path';
+const port = process.env.PORT ?? 3333;
 
-const app = express();
+(async () => {
+  try {
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+    await initializeServer(port);
+  } catch {
 
-app.get('/api', (req, res) => {
-    res.send({ message: 'Welcome to checkflow-api!' });
-});
-
-const port = process.env.port || 3333;
-const server = app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+    process.exit(1);
+  }
+})()
