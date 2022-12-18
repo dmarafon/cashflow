@@ -19,7 +19,8 @@
             ]
           }
         ]
-      }
+      },
+      "extends": ["@nrwl/nx/react"]
     },
     {
       "files": ["*.ts", "*.tsx"],
@@ -36,7 +37,10 @@
       "env": {
         "jest": true
       },
-      "rules": {}
-    }
+      "rules": {
+        "no-plusplus": "off",
+        "no-restricted-syntax": "off"
+        }
+     }
   ]
 }
