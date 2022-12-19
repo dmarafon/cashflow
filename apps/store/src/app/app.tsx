@@ -2,7 +2,7 @@
 import { CommonUi } from '@cashflowweb/common-ui';
 import NxWelcome from './nx-welcome';
 
-export function App() {
+export const App = () => {
   return (
     <>
       <NxWelcome title="store" />

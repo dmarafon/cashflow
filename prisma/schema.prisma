@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_DEV_URL")
+}
+
+model currencies {
+  country    String? @unique(map: "country") @db.VarChar(100)
+  currency   String? @db.VarChar(100)
+  code       String? @db.VarChar(4)
+  minor_unit Int?    @db.SmallInt
+  symbol     String? @db.VarChar(100)
+  id         String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  users      users[]
+}
+
+model users {
+  name       String      @db.VarChar(50)
+  surname    String      @db.VarChar(50)
+  email      String      @db.VarChar(255)
+  country    String?     @db.VarChar(100)
+  password   String      @db.VarChar(200)
+  id         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  currencies currencies? @relation(fields: [country], references: [country], onDelete: NoAction, onUpdate: NoAction)
+}
