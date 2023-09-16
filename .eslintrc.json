@@ -6,6 +6,8 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
+        "no-plusplus": "off",
+        "no-restricted-syntax": "off",
         "@nx/enforce-module-boundaries": [
           "error",
           {
