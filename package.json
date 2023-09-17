@@ -1,10 +1,11 @@
 {
   "name": "@cfweb/source",
-  "version": "0.0.0",
+  "version": "1.0.0-a.1",
   "license": "MIT",
   "scripts": {
-    "dev:api": "pnpm nx serve api",
-    "dev:cf": "nx serve cfweb"
+    "dev:api": "nx serve api",
+    "dev:cf": "nx serve cfweb",
+    "psql:run": "source .env && PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER"
   },
   "private": true,
   "dependencies": {
