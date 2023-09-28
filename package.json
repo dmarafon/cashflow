@@ -6,6 +6,7 @@
     "dev:api": "nx serve api",
     "dev:cf": "nx serve cfweb",
     "watch:pgtyped": "pnpm npx pgtyped -w -c config.json",
+    "run:pgtyped": "pnpm npx pgtyped -c config.json",
     "run:psql": "source .env && PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER"
   },
   "private": true,
