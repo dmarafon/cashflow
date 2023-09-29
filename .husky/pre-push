@@ -3,13 +3,15 @@
 
 local_branch_name="$(git rev-parse --abbrev-ref HEAD)"
 
-valid_branch_regex='^(story|fix|test)\(/[a-zA-Z0-9\-]+)?\)$'
+# Define a regex pattern for a valid branch name format
+valid_branch_regex='^(story|fix|test)/[a-zA-Z0-9\-]+$'
 
 message="Please check your branch name."
 
-if [[ ! $local_branch_name =~ $valid_branch_regex ]]; then
+if ! [[ "$local_branch_name" =~ $valid_branch_regex ]]; then
     echo -e "\033[0;31m$message"
     exit 1
 fi
 
 exit 0
+
