@@ -12,9 +12,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install modules
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Testing
-        run: npm run test
+        run: pnpm run test
         env:
           SECRET: ${( secrets.SECRET)}

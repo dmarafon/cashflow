@@ -14,9 +14,9 @@ jobs:
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install modules
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Testing coverage
-        run: npm run test:coverage
+        run: pnpm run test:coverage
         env:
           SECRET: ${( secrets.SECRET)}
       - name: SonarCloud Scan
