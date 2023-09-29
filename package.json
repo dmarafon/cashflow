@@ -7,7 +7,10 @@
     "dev:cf": "nx serve cfweb",
     "watch:pgtyped": "pnpm npx pgtyped -w -c config.json",
     "run:pgtyped": "pnpm npx pgtyped -c config.json",
-    "run:psql": "source .env && PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER"
+    "run:psql": "source .env && PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER",
+    "prepare": "husky install",
+    "test": "jest --watchAll=false --passWithNoTests",
+    "test-coverage": "pnpm run test -- --coverage --watchAll=false"
   },
   "private": true,
   "dependencies": {
@@ -70,6 +73,7 @@
     "ts-node": "10.9.1",
     "typescript": "~5.1.6",
     "vite": "~4.3.9",
-    "vitest": "~0.32.4"
+    "vitest": "~0.32.4",
+    "husky": "^8.0.0"
   }
 }
