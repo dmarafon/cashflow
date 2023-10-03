@@ -33,5 +33,27 @@
       "extends": ["plugin:@nx/javascript"],
       "rules": {}
     }
+  ],
+  "@nx/enforce-module-boundaries": [
+    "error",
+    {
+      "allow": [],
+      "banTransitiveDependencies": true,
+      "depConstraints": [
+        {
+          "sourceTag": "scope:shared",
+          "onlyDependOnLibsWithTags": ["scope:shared"]
+        },
+        {
+          "sourceTag": "scope:api",
+          "onlyDependOnLibsWithTags": ["scope:shared"]
+        },
+        {
+          "sourceTag": "scope:web",
+          "onlyDependOnLibsWithTags": ["scope:shared"]
+        }
+      ]
+    }
   ]
+
 }
