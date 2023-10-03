@@ -33,7 +33,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/apps/api/src/dbsql
+/apps/api/src/database/dbsql
 /config.json
 
 
