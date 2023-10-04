@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import { debug } from 'console'
 import { config } from 'dotenv'
-import app from './main'
+import app from '.'
 
 config()
 
