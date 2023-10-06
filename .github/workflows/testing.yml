@@ -1,0 +1,25 @@
+name: Testing on push
+
+on: push
+
+jobs:
+  test:
+    name: Test passes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: pnpm-setup
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.8.0
+
+      - name: Install modules
+        run: pnpm install
+
+      - name: Testing
+        run: pnpm run test
+        env:
+          SECRET: ${( secrets.SECRET)}
