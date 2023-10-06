@@ -8,7 +8,7 @@
     "run:psql": "source .env && PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER",
     "prepare": "husky install",
     "test": "jest --watchAll=false --passWithNoTests",
-    "test:coverage": "pnpm run test -- --coverage --watchAll=false"
+    "test:coverage": "jest --coverage --watchAll=false"
   },
   "private": true,
   "dependencies": {
