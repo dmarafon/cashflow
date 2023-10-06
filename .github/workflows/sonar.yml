@@ -13,6 +13,19 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: pnpm-setup
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.8.0
+
+      - name: Install modules
+        run: pnpm install
+
+      - name: Testing coverage
+        run: pnpm run test:coverage
+        env:
+          SECRET: ${( secrets.SECRET)}
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
