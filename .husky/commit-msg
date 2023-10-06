@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-valid_branch_regex='^(bug|chore|feat)\([a-zA-Z0-9\-]+(/[a-zA-Z0-9\-]+)?\):\s+[a-zA-Z0-9\-]+)$'
+valid_branch_regex='^(bug|chore|feat|test)\([a-zA-Z0-9\-]+(/[a-zA-Z0-9\-]+)?\):\s+[a-zA-Z0-9\-]+)$'
 
 while read line; do
     # Skip comments
