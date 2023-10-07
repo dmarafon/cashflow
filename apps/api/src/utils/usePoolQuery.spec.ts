@@ -21,10 +21,19 @@ app.get('/example', async (_req, res) => {
   }
 })
 
+const mockPoolQuery = (mockCallback: any) => {
+  const mockQuery = jest.fn(
+    (query: string, values: any[], callback: (err: Error | null, result: any) => void) => {
+      mockCallback(query, values, callback)
+    }
+  )
+  require('./pool').pool.query = mockQuery
+}
+
 describe('usePoolQuery function', () => {
   it('should return a valid response for a successful query', async () => {
-    const mockQuery = jest.fn(
-      (query: string, values: any[], callback: (err: Error | null, result: any) => void) => {
+    mockPoolQuery(
+      (query: string, _values: any[], callback: (err: Error | null, result: any) => void) => {
         const fakeResult = {
           rows: [{ id: 1, name: 'Test' }],
           rowCount: 1,
@@ -34,21 +43,17 @@ describe('usePoolQuery function', () => {
       }
     )
 
-    require('./pool').pool.query = mockQuery
-
     const response = await request(app).get('/example')
     expect(response.status).toBe(200)
     expect(response.body.value).toEqual({ id: 1, name: 'Test' })
   })
 
   it('should return an error for a failed query', async () => {
-    const mockQuery = jest.fn(
-      (query: string, values: any[], callback: (err: Error | null, result: any) => void) => {
+    mockPoolQuery(
+      (_query: string, _values: any[], callback: (err: Error | null, result: any) => void) => {
         callback(new Error('Database error'), null)
       }
     )
-
-    require('./pool').pool.query = mockQuery
 
     const response = await request(app).get('/example')
     expect(response.status).toBe(500)
