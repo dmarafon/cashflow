@@ -2,7 +2,6 @@ import express from 'express'
 import request from 'supertest'
 import { usePoolQuery } from './usePoolQuery' // Replace with your actual module
 
-// Mock pool.query for testing
 jest.mock('./pool', () => {
   return {
     pool: {
@@ -11,10 +10,8 @@ jest.mock('./pool', () => {
   }
 })
 
-// Your Express app setup
 const app = express()
 
-//
 app.get('/example', async (_req, res) => {
   try {
     const result = await usePoolQuery('SELECT * FROM your_table')
