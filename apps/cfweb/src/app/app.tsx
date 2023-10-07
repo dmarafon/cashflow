@@ -1,11 +1,5 @@
-
-
 export const App = () => {
-  return (
-    <div>
-      'Building'
-    </div>
-  )
+  return <div>'Building'</div>
 }
 
-export default App;
+export default App
