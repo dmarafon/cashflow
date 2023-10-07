@@ -16,7 +16,7 @@ jobs:
       - name: pnpm-setup
         uses: pnpm/action-setup@v2
         with:
-          version: latest
+          version: 7.33.6
 
       - name: Install modules
         run: pnpm install
