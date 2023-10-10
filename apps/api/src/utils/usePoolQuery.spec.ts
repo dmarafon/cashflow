@@ -1,57 +1,62 @@
-import express from 'express'
-import request from 'supertest'
-import { usePoolQuery } from './usePoolQuery' // Replace with your actual module
+import { first } from '@cf/shared'
+import { pool } from './pool'
+import { usePoolQuery } from './usePoolQuery'
 
-jest.mock('./pool', () => {
-  return {
-    pool: {
-      query: jest.fn(),
-    },
-  }
-})
+jest.mock('./pool', () => ({
+  pool: {
+    query: jest.fn(),
+  },
+}))
 
-const app = express()
+jest.mock('@cf/shared', () => ({
+  first: jest.fn(),
+}))
 
-app.get('/example', async (_req, res) => {
-  try {
-    const result = await usePoolQuery('SELECT * FROM your_table')
-    res.json(result)
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-})
+describe('Given an usePoolQuery', () => {
+  beforeAll(() => {
+    const mockQueryResult = {
+      rows: [{ result: 'mocked data' }],
+      rowCount: 1,
+      fields: [{ name: 'result' }],
+    }
 
-describe('usePoolQuery function', () => {
-  it('should return a valid response for a successful query', async () => {
-    const mockQuery = jest.fn(
-      (query: string, values: any[], callback: (err: Error | null, result: any) => void) => {
-        const fakeResult = {
-          rows: [{ id: 1, name: 'Test' }],
-          rowCount: 1,
-          fields: [],
-        }
-        callback(null, fakeResult)
-      }
-    )
+    const mockFirstResult = { result: 'mocked data' }
 
-    require('./pool').pool.query = mockQuery
-
-    const response = await request(app).get('/example')
-    expect(response.status).toBe(200)
-    expect(response.body.value).toEqual({ id: 1, name: 'Test' })
+    ;(first as any).mockReturnValue(mockFirstResult)
+    ;(pool.query as any).mockImplementation((_query, _extraData, callback) => {
+      callback(null, mockQueryResult)
+    })
   })
 
-  it('should return an error for a failed query', async () => {
-    const mockQuery = jest.fn(
-      (query: string, values: any[], callback: (err: Error | null, result: any) => void) => {
-        callback(new Error('Database error'), null)
-      }
-    )
+  it('should resolve with the correct result', async () => {
+    const query = 'SELECT * FROM your_table'
+    const result = await usePoolQuery(query, [])
 
-    require('./pool').pool.query = mockQuery
+    expect(result).toEqual({
+      value: { result: 'mocked data' },
+      count: 1,
+      fields: [{ name: 'result' }],
+    })
+  })
 
-    const response = await request(app).get('/example')
-    expect(response.status).toBe(500)
-    expect(response.body.error).toBe('Database error')
+  it('should reject with an error', async () => {
+    const mockError = new Error('Mocked error')
+
+    ;(pool.query as any).mockImplementation((_query, _extraData, callback) => {
+      callback(mockError, null)
+    })
+
+    const query = 'SELECT * FROM your_table'
+
+    try {
+      await usePoolQuery(query, [])
+      expect(true).toBe(false)
+    } catch (error) {
+      expect(error).toBe(mockError)
+    }
+  })
+
+  afterAll(() => {
+    jest.resetAllMocks()
   })
 })
