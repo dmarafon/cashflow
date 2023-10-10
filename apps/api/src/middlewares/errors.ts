@@ -16,14 +16,14 @@ export const notFoundError = (_req: Request, _res: Response, next: NextFunction)
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const generalError = (
-  error: Error | undefined,
+  error: undefined | Error,
   _req: Request,
   res: Response,
   _next: NextFunction
 ) => {
-  debug(chalk.red(error.message || error.cause))
-  const message = error.name ?? 'General Error'
-  const statusCode = typeof error.cause === 'number' ? error.cause : 500
+  debug(chalk.red(error?.message || error?.cause))
+  const message = error?.name ?? 'General Error'
+  const statusCode = typeof error?.cause === 'number' ? error.cause : 500
 
   if (error instanceof Error) {
     res.status(400).json({ message: 'Bad Request' })
