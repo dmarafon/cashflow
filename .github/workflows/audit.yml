@@ -34,7 +34,7 @@ jobs:
         run: pnpm install
 
       - name: ESLint validation
-        run: pnpm dlx eslint --ignore-path .gitignore .
+        run: pnpm dlx eslint --ignore-path .gitignore
 
       - name: Check commit message length
         uses: gsactions/commit-message-checker@v1
